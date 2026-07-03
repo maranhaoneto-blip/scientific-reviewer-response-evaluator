@@ -1,0 +1,10 @@
+metric,value
+total_cases,10
+label_matches,10
+label_accuracy,1.0
+average_final_score,3.8
+average_completeness,3.8
+average_scientific_accuracy,4.0
+average_tone,4.2
+average_actionability,3.0
+average_clarity,4.0
