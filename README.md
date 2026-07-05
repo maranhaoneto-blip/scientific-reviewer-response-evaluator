@@ -77,3 +77,51 @@ Install the required Python packages with:
 ```bash
 python -m pip install -r requirements.txt
 ```
+## Example output
+
+The evaluation pipeline generates two output files:
+
+```text
+outputs/evaluation_report.csv
+outputs/summary_metrics.csv
+```
+
+The case-level report includes:
+
+- individual rubric scores;
+- final average score;
+- assigned quality label;
+- expected label;
+- agreement between assigned and expected labels.
+
+The summary metrics file includes aggregate results such as:
+
+- total number of cases;
+- label accuracy;
+- average final score;
+- average score for each rubric criterion.
+
+## Skills demonstrated
+
+This MVP demonstrates:
+
+- structured AI evaluation design;
+- rubric-based assessment;
+- scientific writing quality evaluation;
+- CSV data processing with Python;
+- automated testing with pytest;
+- basic software project organization;
+- Git and GitHub version control;
+- documentation of evaluation criteria.
+
+## Roadmap
+
+Planned next steps:
+
+- expand the evaluation dataset;
+- add qualitative explanations for each score;
+- add recommendation labels such as ready_for_submission, minor_revision, major_revision, and reject_response;
+- compare different prompt strategies;
+- add inter-rater agreement metrics;
+- create a simple dashboard;
+- develop an API endpoint for automated evaluation.
