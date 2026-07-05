@@ -8,3 +8,6 @@ average_scientific_accuracy,4.0
 average_tone,4.2
 average_actionability,3.0
 average_clarity,4.0
+count_ready_for_submission,5
+count_reject_response,2
+count_major_revision,3

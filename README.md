@@ -42,8 +42,9 @@ The current version:
 - reads a CSV dataset of reviewer comments and AI-generated responses;
 - calculates a final score;
 - assigns a quality label;
+- assigns a practical recommendation label;
 - compares the predicted label with the expected label;
-- exports an evaluation report as CSV.
+- exports case-level and summary evaluation reports as CSV.
 
 ## Project structure
 
@@ -91,6 +92,7 @@ The case-level report includes:
 - individual rubric scores;
 - final average score;
 - assigned quality label;
+- practical recommendation label;
 - expected label;
 - agreement between assigned and expected labels.
 

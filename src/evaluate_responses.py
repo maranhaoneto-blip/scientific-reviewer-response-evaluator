@@ -30,6 +30,18 @@ def assign_label(final_score):
         return "poor"
 
 
+def assign_recommendation(final_label):
+    """Assign a practical recommendation based on the final quality label."""
+    recommendations = {
+        "strong": "ready_for_submission",
+        "acceptable": "minor_revision",
+        "needs_revision": "major_revision",
+        "poor": "reject_response",
+    }
+
+    return recommendations[final_label]
+
+
 def calculate_final_score(row):
     """Calculate the mean score across all rubric criteria."""
     scores = []
@@ -48,6 +60,7 @@ def create_case_report(rows):
     for row in rows:
         final_score = calculate_final_score(row)
         final_label = assign_label(final_score)
+        recommendation = assign_recommendation(final_label)
         expected_label = row["expected_final_label"]
 
         result = {
@@ -59,6 +72,7 @@ def create_case_report(rows):
             "clarity": row["clarity"],
             "final_score": final_score,
             "final_label": final_label,
+            "recommendation": recommendation,
             "expected_final_label": expected_label,
             "label_match": final_label == expected_label,
         }
@@ -88,6 +102,15 @@ def create_summary_metrics(results):
             sum(float(result[column]) for result in results) / total_cases, 2
         )
 
+    recommendation_counts = {}
+
+    for result in results:
+        recommendation = result["recommendation"]
+        recommendation_counts[recommendation] = recommendation_counts.get(recommendation, 0) + 1
+
+    for recommendation, count in recommendation_counts.items():
+        summary[f"count_{recommendation}"] = count
+
     return summary
 
 
@@ -104,6 +127,7 @@ def write_case_report(results):
         "clarity",
         "final_score",
         "final_label",
+        "recommendation",
         "expected_final_label",
         "label_match",
     ]

@@ -4,7 +4,11 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(PROJECT_ROOT))
 
-from src.evaluate_responses import assign_label, calculate_final_score
+from src.evaluate_responses import (
+    assign_label,
+    assign_recommendation,
+    calculate_final_score,
+)
 
 
 def test_assign_label_strong():
@@ -37,3 +41,10 @@ def test_calculate_final_score():
     }
 
     assert calculate_final_score(row) == 4.6
+
+
+def test_assign_recommendation():
+    assert assign_recommendation("strong") == "ready_for_submission"
+    assert assign_recommendation("acceptable") == "minor_revision"
+    assert assign_recommendation("needs_revision") == "major_revision"
+    assert assign_recommendation("poor") == "reject_response"
