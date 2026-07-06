@@ -42,6 +42,30 @@ def assign_recommendation(final_label):
     return recommendations[final_label]
 
 
+def assign_adequacy_decision(final_label):
+    """Assign a practical adequacy decision based on the final quality label."""
+    decisions = {
+        "strong": "adequate",
+        "acceptable": "adequate_with_minor_edits",
+        "needs_revision": "not_ready",
+        "poor": "not_adequate",
+    }
+
+    return decisions[final_label]
+
+
+def assign_ready_to_send(final_label):
+    """Indicate whether the response is ready for resubmission."""
+    readiness = {
+        "strong": "yes",
+        "acceptable": "conditional",
+        "needs_revision": "no",
+        "poor": "no",
+    }
+
+    return readiness[final_label]
+
+
 def assign_evaluation_summary(final_label):
     """Assign a qualitative summary based on the final quality label."""
     summaries = {
@@ -66,6 +90,63 @@ def assign_evaluation_summary(final_label):
     return summaries[final_label]
 
 
+def identify_main_issue(row):
+    """Identify the lowest-scoring rubric criterion as the main issue."""
+    lowest_score = min(float(row[column]) for column in SCORE_COLUMNS)
+
+    if lowest_score >= 4.5:
+        return "no_major_issue"
+
+    if lowest_score >= 4:
+        return "minor_specificity_or_traceability_issue"
+
+    issue_labels = {
+        "completeness": "incomplete_response",
+        "scientific_accuracy": "scientific_or_methodological_accuracy_issue",
+        "tone": "tone_or_defensiveness_issue",
+        "actionability": "unclear_revision_or_missing_manuscript_change",
+        "clarity": "clarity_or_specificity_issue",
+    }
+
+    lowest_column = min(SCORE_COLUMNS, key=lambda column: float(row[column]))
+    return issue_labels[lowest_column]
+
+
+def suggest_fix(main_issue):
+    """Suggest a practical fix for the main response issue."""
+    fixes = {
+        "no_major_issue": (
+            "No major issue identified. The response appears adequate for "
+            "resubmission."
+        ),
+        "minor_specificity_or_traceability_issue": (
+            "Consider adding a little more specificity about the manuscript "
+            "change or where the reviewer can find it."
+        ),
+        "incomplete_response": (
+            "Address every part of the reviewer comment and make clear what was "
+            "changed in the manuscript."
+        ),
+        "scientific_or_methodological_accuracy_issue": (
+            "Revise the response to avoid unsupported claims and ensure the "
+            "methodological explanation matches the study design and analysis."
+        ),
+        "tone_or_defensiveness_issue": (
+            "Use a calmer and more professional tone, acknowledging the reviewer "
+            "concern before explaining the revision or disagreement."
+        ),
+        "unclear_revision_or_missing_manuscript_change": (
+            "Specify the concrete manuscript change, including the section, table, "
+            "figure, analysis, or limitation that was revised."
+        ),
+        "clarity_or_specificity_issue": (
+            "Make the response more specific and easier for the reviewer to verify."
+        ),
+    }
+
+    return fixes[main_issue]
+
+
 def calculate_final_score(row):
     """Calculate the mean score across all rubric criteria."""
     scores = []
@@ -85,7 +166,11 @@ def create_case_report(rows):
         final_score = calculate_final_score(row)
         final_label = assign_label(final_score)
         recommendation = assign_recommendation(final_label)
+        adequacy_decision = assign_adequacy_decision(final_label)
+        ready_to_send = assign_ready_to_send(final_label)
         evaluation_summary = assign_evaluation_summary(final_label)
+        main_issue = identify_main_issue(row)
+        suggested_fix = suggest_fix(main_issue)
         expected_label = row["expected_final_label"]
 
         result = {
@@ -98,7 +183,11 @@ def create_case_report(rows):
             "final_score": final_score,
             "final_label": final_label,
             "recommendation": recommendation,
+            "adequacy_decision": adequacy_decision,
+            "ready_to_send": ready_to_send,
             "evaluation_summary": evaluation_summary,
+            "main_issue": main_issue,
+            "suggested_fix": suggested_fix,
             "expected_final_label": expected_label,
             "label_match": final_label == expected_label,
         }
@@ -129,13 +218,20 @@ def create_summary_metrics(results):
         )
 
     recommendation_counts = {}
+    adequacy_counts = {}
 
     for result in results:
         recommendation = result["recommendation"]
         recommendation_counts[recommendation] = recommendation_counts.get(recommendation, 0) + 1
 
+        adequacy_decision = result["adequacy_decision"]
+        adequacy_counts[adequacy_decision] = adequacy_counts.get(adequacy_decision, 0) + 1
+
     for recommendation, count in recommendation_counts.items():
         summary[f"count_{recommendation}"] = count
+
+    for adequacy_decision, count in adequacy_counts.items():
+        summary[f"count_{adequacy_decision}"] = count
 
     return summary
 
@@ -154,7 +250,11 @@ def write_case_report(results):
         "final_score",
         "final_label",
         "recommendation",
+        "adequacy_decision",
+        "ready_to_send",
         "evaluation_summary",
+        "main_issue",
+        "suggested_fix",
         "expected_final_label",
         "label_match",
     ]
