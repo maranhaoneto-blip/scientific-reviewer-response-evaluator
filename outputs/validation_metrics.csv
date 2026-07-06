@@ -1,4 +1,0 @@
-case_id,number_of_raters,consensus_label,label_percent_agreement,mean_expert_score
-case_001,2,strong,1.0,4.7
-case_002,2,poor,1.0,2.5
-case_011,2,acceptable,1.0,3.9
