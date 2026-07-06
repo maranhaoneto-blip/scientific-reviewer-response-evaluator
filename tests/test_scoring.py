@@ -5,6 +5,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(PROJECT_ROOT))
 
 from src.evaluate_responses import (
+    assign_evaluation_summary,
     assign_label,
     assign_recommendation,
     calculate_final_score,
@@ -48,3 +49,10 @@ def test_assign_recommendation():
     assert assign_recommendation("acceptable") == "minor_revision"
     assert assign_recommendation("needs_revision") == "major_revision"
     assert assign_recommendation("poor") == "reject_response"
+
+
+def test_assign_evaluation_summary():
+    assert "ready for submission" in assign_evaluation_summary("strong")
+    assert "minor improvements" in assign_evaluation_summary("acceptable")
+    assert "substantive revision" in assign_evaluation_summary("needs_revision")
+    assert "incomplete" in assign_evaluation_summary("poor")
