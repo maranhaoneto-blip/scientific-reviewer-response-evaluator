@@ -12,3 +12,7 @@ count_ready_for_submission,5
 count_reject_response,2
 count_major_revision,3
 count_minor_revision,1
+count_adequate,5
+count_not_adequate,2
+count_not_ready,3
+count_adequate_with_minor_edits,1
