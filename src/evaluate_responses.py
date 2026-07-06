@@ -42,6 +42,30 @@ def assign_recommendation(final_label):
     return recommendations[final_label]
 
 
+def assign_evaluation_summary(final_label):
+    """Assign a qualitative summary based on the final quality label."""
+    summaries = {
+        "strong": (
+            "The response is complete, scientifically accurate, clear, and ready "
+            "for submission with minimal or no revision."
+        ),
+        "acceptable": (
+            "The response is mostly adequate but would benefit from minor "
+            "improvements in specificity, detail, or wording."
+        ),
+        "needs_revision": (
+            "The response partially addresses the reviewer comment but requires "
+            "substantive revision before submission."
+        ),
+        "poor": (
+            "The response is incomplete, inaccurate, unclear, or not appropriate "
+            "for inclusion in a reviewer response letter."
+        ),
+    }
+
+    return summaries[final_label]
+
+
 def calculate_final_score(row):
     """Calculate the mean score across all rubric criteria."""
     scores = []
@@ -61,6 +85,7 @@ def create_case_report(rows):
         final_score = calculate_final_score(row)
         final_label = assign_label(final_score)
         recommendation = assign_recommendation(final_label)
+        evaluation_summary = assign_evaluation_summary(final_label)
         expected_label = row["expected_final_label"]
 
         result = {
@@ -73,6 +98,7 @@ def create_case_report(rows):
             "final_score": final_score,
             "final_label": final_label,
             "recommendation": recommendation,
+            "evaluation_summary": evaluation_summary,
             "expected_final_label": expected_label,
             "label_match": final_label == expected_label,
         }
@@ -128,6 +154,7 @@ def write_case_report(results):
         "final_score",
         "final_label",
         "recommendation",
+        "evaluation_summary",
         "expected_final_label",
         "label_match",
     ]
