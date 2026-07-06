@@ -30,10 +30,10 @@ The rubric defines the scoring criteria, score levels, and final label rules use
 
 | Final score | Label |
 |---|---|
-| 4.5–5.0 | strong |
-| 3.5–4.4 | acceptable |
-| 2.5–3.4 | needs_revision |
-| 1.0–2.4 | poor |
+| 4.5-5.0 | strong |
+| 3.5-4.4 | acceptable |
+| 2.5-3.4 | needs_revision |
+| 1.0-2.4 | poor |
 
 ## Current MVP
 
@@ -43,6 +43,7 @@ The current version:
 - calculates a final score;
 - assigns a quality label;
 - assigns a practical recommendation label;
+- adds a qualitative evaluation summary;
 - compares the predicted label with the expected label;
 - exports case-level and summary evaluation reports as CSV.
 
@@ -50,27 +51,28 @@ The current version:
 
 ```text
 scientific-reviewer-response-evaluator/
-│
+|
 ├── data/
 │   └── sample_reviewer_responses.csv
-│
+|
 ├── docs/
 │   └── RUBRIC.md
-│
+|
 ├── outputs/
 │   ├── evaluation_report.csv
 │   └── summary_metrics.csv
-│
+|
 ├── src/
 │   └── evaluate_responses.py
-│
+|
 ├── tests/
 │   └── test_scoring.py
-│
+|
 ├── .gitignore
 ├── README.md
 └── requirements.txt
 ```
+
 ## Installation
 
 Install the required Python packages with:
@@ -78,6 +80,7 @@ Install the required Python packages with:
 ```bash
 python -m pip install -r requirements.txt
 ```
+
 ## Example output
 
 The evaluation pipeline generates two output files:
@@ -93,6 +96,7 @@ The case-level report includes:
 - final average score;
 - assigned quality label;
 - practical recommendation label;
+- qualitative evaluation summary;
 - expected label;
 - agreement between assigned and expected labels.
 
@@ -101,7 +105,8 @@ The summary metrics file includes aggregate results such as:
 - total number of cases;
 - label accuracy;
 - average final score;
-- average score for each rubric criterion.
+- average score for each rubric criterion;
+- recommendation counts.
 
 ## Skills demonstrated
 
@@ -120,9 +125,7 @@ This MVP demonstrates:
 
 Planned next steps:
 
-- expand the evaluation dataset;
-- add qualitative explanations for each score;
-- add recommendation labels such as ready_for_submission, minor_revision, major_revision, and reject_response;
+- expand the evaluation dataset with more realistic reviewer-response cases;
 - compare different prompt strategies;
 - add inter-rater agreement metrics;
 - create a simple dashboard;
