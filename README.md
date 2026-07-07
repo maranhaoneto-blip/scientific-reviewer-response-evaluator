@@ -69,6 +69,28 @@ The practical framework emphasizes whether the response:
 
 The detailed practical criteria are available in `docs/PRACTICAL_CRITERIA.md`.
 
+## Custom GPT Companion
+
+A no-API Custom GPT companion was created to allow users to paste reviewer comments, manuscript context, and proposed author responses directly into ChatGPT.
+
+The GPT returns a structured publication-readiness assessment, including:
+
+- adequacy decision;
+- ready-to-send status;
+- criterion scores;
+- main issue;
+- suggested fix;
+- evaluation summary;
+- improved response.
+
+This companion tool is intended as a practical publication-readiness aid. It is not a validated measurement instrument and does not replace author, editor, statistician, or subject-matter judgment.
+
+Recommended GPT name:
+
+```text
+Reviewer Response Readiness Checker
+```
+
 ## Project structure
 
 ```text
