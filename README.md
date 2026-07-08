@@ -90,7 +90,11 @@ Recommended GPT name:
 ```text
 Reviewer Response Readiness Checker
 ```
+Custom GPT behavior was tested using practical readiness scenarios documented in:
 
+```text
+docs/GPT_TEST_CHECKLIST.md
+```
 ## Project structure
 
 ```text
