@@ -104,6 +104,7 @@ scientific-reviewer-response-evaluator/
 │   └── sample_reviewer_responses.csv
 |
 ├── docs/
+│   ├── GPT_TEST_CHECKLIST.md
 │   ├── PRACTICAL_CRITERIA.md
 │   └── RUBRIC.md
 |
