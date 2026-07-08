@@ -90,11 +90,19 @@ Recommended GPT name:
 ```text
 Reviewer Response Readiness Checker
 ```
+
 Custom GPT behavior was tested using practical readiness scenarios documented in:
 
 ```text
 docs/GPT_TEST_CHECKLIST.md
 ```
+
+Example GPT evaluations are documented in:
+
+```text
+docs/EXAMPLE_EVALUATIONS.md
+```
+
 ## Project structure
 
 ```text
@@ -104,6 +112,7 @@ scientific-reviewer-response-evaluator/
 │   └── sample_reviewer_responses.csv
 |
 ├── docs/
+│   ├── EXAMPLE_EVALUATIONS.md
 │   ├── GPT_TEST_CHECKLIST.md
 │   ├── PRACTICAL_CRITERIA.md
 │   └── RUBRIC.md
@@ -170,6 +179,7 @@ This MVP demonstrates:
 - rubric-based assessment;
 - scientific writing quality evaluation;
 - practical reviewer-response readiness assessment;
+- Custom GPT design and testing without paid API use;
 - CSV data processing with Python;
 - automated testing with pytest;
 - basic software project organization;
